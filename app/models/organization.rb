@@ -1,3 +1,5 @@
+# This class is used to keep track of applications from organizations, including their status and other properties. It also has methods to change the application status, and it is able to validate the email address attached to the orga
+
 class Organization < ApplicationRecord
 
   attr_accessor :agreement_one, :agreement_two, :agreement_three, :agreement_four, :agreement_five, :agreement_six, :agreement_seven, :agreement_eight

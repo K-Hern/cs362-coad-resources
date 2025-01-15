@@ -1,3 +1,6 @@
+# Class: Ticket
+# -------------
+# Description: Create a ticket with a name, phone number, region id, resource category
 class Ticket < ApplicationRecord
 
   belongs_to :region
@@ -17,15 +20,29 @@ class Ticket < ApplicationRecord
   scope :region, -> (region_id) { where(region_id: region_id) }
   scope :resource_category, -> (resource_category_id) { where(resource_category_id: resource_category_id) }
 
-
+# Class Definition: open?
+# ------------------------
+# Checks if the ticket is open.
+#
+# @return [Boolean] true if the ticket is open, false otherwise
   def open?
     !closed
   end
 
+# Class Definition: captured?
+# ----------------------------
+# Checks if the ticket is captured.
+#
+# @return [Boolean] true if the ticket is captured, false otherwise
   def captured?
     organization.present?
   end
 
+# Class Definition: to_s
+# -----------------------
+# Returns a string representation of the ticket.
+#
+# @return [String] the string representation of the ticket
   def to_s
     "Ticket #{id}"
   end

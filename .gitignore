@@ -38,3 +38,6 @@
 
 .ruby-gemset
 .ruby-version
+
+# Ignore all desktop meta files
+.DS_Store

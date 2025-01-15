@@ -25,19 +25,19 @@ RSpec.describe ResourceCategory, type: :model do
   end
 
   it "has a boolean status flag" do
-    resourceCat = ResourceCategory.new(name:)
+    resourceCat = ResourceCategory.new()
     expect(resourceCat).to respond_to(:active)
   end
 
   it "has a way to check active status" do
     resourceCat = ResourceCategory.new
-    expect(resourceCat).to respond_to(.inactive?)
+    expect(resourceCat).to respond_to(:inactive?)
   end
 
   it "has a way to change status" do
     resourceCat = ResourceCategory.new(name: "Tester", active: false)
     resourceCat.activate()
-    expect(resourceCat.inactive?).to be_false()
+    expect(resourceCat.inactive?).to be_falsey()
   end
 
 

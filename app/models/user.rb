@@ -1,3 +1,6 @@
+# Class: User
+# -----------
+# Description: Create a user with a valid email and password
 class User < ApplicationRecord
 
   enum role: [:admin, :organization]

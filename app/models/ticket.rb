@@ -1,3 +1,6 @@
+# Class: Ticket
+# -------------
+# Description: Create a ticket with a name, phone number, region id, resource category
 class Ticket < ApplicationRecord
 
   belongs_to :region

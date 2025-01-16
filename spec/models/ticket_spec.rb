@@ -8,7 +8,17 @@ RSpec.describe Ticket, type: :model do
         expect(Ticket.new)
     end
 
-# TODO: belongs_to
+    it "belongs to region" do
+        belong_to(:region)
+    end
+
+    it "belongs to resource category" do
+        belong_to(:resource_category)
+    end
+
+    it "belongs to organization" do
+        belong_to(:organization).optional
+    end
 
     it "validates presence of name" do
         should validate_presence_of(:name)

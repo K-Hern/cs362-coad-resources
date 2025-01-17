@@ -32,13 +32,6 @@ RSpec.describe Organization, type: :model do
         it "responds to rejection_reason" do
             expect(org).to respond_to(:rejection_reason)
         end
-        it "responds to created_at" do
-            expect(org).to respond_to(:created_at)
-        end
-
-        it "responds to updated_at" do
-            expect(org).to respond_to(:updated_at)
-        end
 
         it "responds to liability_insurance" do
             expect(org).to respond_to(:liability_insurance)

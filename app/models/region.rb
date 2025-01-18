@@ -1,4 +1,4 @@
-# Class Definition: strip
+# Class Definition: Region
 # ----------------------------
 # A list of regions a user can select help from
 #   Name field must be from 1 - 255 chars & non empty, & is not case sensitive

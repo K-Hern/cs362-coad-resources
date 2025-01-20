@@ -25,7 +25,6 @@ RSpec.describe User, type: :model do
     end
 
     it "validates format of email" do
-  
         expect(user.email).to match(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)
     end
 

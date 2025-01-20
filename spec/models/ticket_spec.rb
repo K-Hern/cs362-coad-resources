@@ -54,4 +54,22 @@ RSpec.describe Ticket, type: :model do
             expect(invalid_phone).to_not match(/\d{3}-\d{3}-\d{4}/) 
         end
     end
+
+    it "returns true if the ticket is open" do
+        expect(ticket.open?).to eq(true)
+    end
+
+    it "returns false if the ticket is closed" do
+        ticket.closed = true
+        expect(ticket.open?).to eq(false)
+    end
+
+    it "returns true if the ticket is captured" do
+        ticket.organization = Organization.new
+        expect(ticket.captured?).to eq(true)
+    end
+
+    it "returns the string representation of the ticket" do
+        expect(ticket.to_s).to eq("Ticket #{ticket.id}")
+    end
 end

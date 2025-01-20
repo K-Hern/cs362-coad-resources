@@ -56,5 +56,26 @@ RSpec.describe Organization, type: :model do
         it "responds to transportation" do
             expect(org).to respond_to(:transportation)
         end
+
+        describe "status" do
+            it "can be approved" do
+                org.approve
+                expect(org.status.to_sym).to eq(:approved)
+            end
+
+            it "can be rejected" do
+                org.reject
+                expect(org.status.to_sym).to eq(:rejected)
+            end
+
+            it "sets default status to submitted" do
+                org.set_default_status
+                expect(org.status.to_sym).to eq(:submitted)
+            end
+        end
+
+        it "returns the name as a string" do
+            expect(org.to_s).to eq(org.name)
+        end
     end
 end

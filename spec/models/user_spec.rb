@@ -44,4 +44,8 @@ RSpec.describe User, type: :model do
     it "has a default role of organization" do
         expect(user.role).to eq("organization")
     end
+
+    it "returns the email as a string" do
+        expect(user.to_s).to eq(user.email)
+    end
 end

@@ -8,44 +8,48 @@ RSpec.describe Ticket, type: :model do
         expect(Ticket.new)
     end
 
-    it "belongs to region" do
-        belong_to(:region)
+    describe "belongs to tests" do
+        it "belongs to region" do
+            should belong_to(:region)
+        end
+
+        it "belongs to resource category" do
+            belong_to(:resource_category)
+        end
+
+        it "belongs to organization" do
+            belong_to(:organization).optional
+        end
     end
 
-    it "belongs to resource category" do
-        belong_to(:resource_category)
-    end
+    describe "validation tests" do
+        it "validates presence of name" do
+            expect(ticket).to validate_presence_of(:name)
+        end
 
-    it "belongs to organization" do
-        belong_to(:organization).optional
-    end
+        it "validates presence of phone" do
+            expect(ticket).to validate_presence_of(:phone)
+        end
 
-    it "validates presence of name" do
-        should validate_presence_of(:name)
-    end
+        it "validates presence of region_id" do
+            expect(ticket).to validate_presence_of(:region_id)
+        end
 
-    it "validates presence of phone" do
-        should validate_presence_of(:phone)
-    end
+        it "validates presence of resource_category_id" do
+            expect(ticket).to validate_presence_of(:resource_category_id)
+        end
 
-    it "validates presence of region_id" do
-        should validate_presence_of(:region_id)
-    end
+        it "validates length of name" do
+            expect(ticket).to validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
+        end
 
-    it "validates presence of resource_category_id" do
-        should validate_presence_of(:resource_category_id)
-    end
-
-    it "validates length of name" do
-        should validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
-    end
-
-    it "validates length of description" do
-        should validate_length_of(:description).is_at_most(1020).on(:create)
+        it "validates length of description" do
+            expect(ticket).to validate_length_of(:description).is_at_most(1020).on(:create)
+        end
     end
     
     describe "Phone number validation" do
-        let(:valid_phone) { "555-123-4567" } 
+        let(:valid_phone) { "+1-555-123-4567" } 
         it "should be considered valid" do
             expect(valid_phone).to match(/\d{3}-\d{3}-\d{4}/) 
         end
@@ -55,21 +59,65 @@ RSpec.describe Ticket, type: :model do
         end
     end
 
-    it "returns true if the ticket is open" do
-        expect(ticket.open?).to eq(true)
+    describe "Scope Tests" do
+        it "open tickets" do
+            region = Region.create!(
+                name: "region1"
+            )
+            resource = ResourceCategory.create!(
+                name: "Resource_1"
+            )
+            ticket = Ticket.create!(
+                name: "Ticket",
+                phone: "+1-555-555-1212",
+                region_id: region.id,
+                resource_category_id: resource.id,
+                closed: false
+            )
+
+            expect(Ticket.open).to include(ticket)
+            expect(Ticket.closed).to_not include(ticket)
+        end
+
+        it "closed tickets" do
+            region = Region.create!(
+                name: "region1"
+            )
+            resource = ResourceCategory.create!(
+                name: "Resource_1"
+            )
+            ticket = Ticket.create!(
+                name: "Ticket",
+                phone: "+1-555-555-1212",
+                region_id: region.id,
+                resource_category_id: resource.id,
+                closed: true
+            )
+
+            expect(Ticket.closed).to include(ticket)
+            expect(Ticket.open).to_not include(ticket)
+        end
+
+        
     end
 
-    it "returns false if the ticket is closed" do
-        ticket.closed = true
-        expect(ticket.open?).to eq(false)
-    end
+    describe "method tests" do
+        it "returns true if the ticket is open" do
+            expect(ticket.open?).to eq(true)
+        end
 
-    it "returns true if the ticket is captured" do
-        ticket.organization = Organization.new
-        expect(ticket.captured?).to eq(true)
-    end
+        it "returns false if the ticket is closed" do
+            ticket.closed = true
+            expect(ticket.open?).to eq(false)
+        end
 
-    it "returns the string representation of the ticket" do
-        expect(ticket.to_s).to eq("Ticket #{ticket.id}")
+        it "returns true if the ticket is captured" do
+            ticket.organization = Organization.new
+            expect(ticket.captured?).to eq(true)
+        end
+
+        it "returns the string representation of the ticket" do
+            expect(ticket.to_s).to eq("Ticket #{ticket.id}")
+        end
     end
 end

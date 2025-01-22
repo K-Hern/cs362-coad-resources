@@ -33,5 +33,21 @@ RSpec.describe Region, type: :model do
     region = Region.new(name: name)
     result = region.to_s
   end
+end
 
+describe ".unspecified" do
+  it "returns the 'Unspecified' region" do
+    unspecified_region = Region.unspecified
+    expect(unspecified_region.name).to eq('Unspecified')
+  end
+
+  it "creates the 'Unspecified' region if it does not exist" do
+    expect { Region.unspecified }.to change { Region.count }.by(1)
+  end
+
+  it "does not create a new 'Unspecified' region if it already exists" do
+    Region.create(name: 'Unspecified')
+    expect { Region.unspecified }.not_to change { Region.count }
+  end
+end
 end

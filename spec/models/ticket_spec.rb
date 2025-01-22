@@ -2,12 +2,43 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
 
-    let (:ticket) { Ticket.new }
+    let (:ticket) { Ticket.new(id: 123) }
+
+    describe "attribute tests" do
+        it "responds to name" do
+            expect(ticket).to respond_to(:name)
+        end
+
+        it "responds to description" do
+            expect(ticket).to respond_to(:description)
+        end
+
+        it "responds to phone" do
+            expect(ticket).to respond_to(:phone)
+        end
+
+        it "responds to organization_id" do
+            expect(ticket).to respond_to(:organization_id)
+        end
+
+        it "responds to closed" do
+            expect(ticket).to respond_to(:closed)
+        end
+
+        it "responds to resource_category_id" do
+            expect(ticket).to respond_to(:resource_category_id)
+        end
+
+        it "responds to region_id" do
+            expect(ticket).to respond_to(:region_id)
+        end
+    end
 
     it "exists" do
         expect(Ticket.new)
     end
 
+    # Not sure if required
     describe "belongs to tests" do
         it "belongs to region" do
             should belong_to(:region)
@@ -40,25 +71,26 @@ RSpec.describe Ticket, type: :model do
         end
 
         it "validates length of name" do
-            expect(ticket).to validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
+            expect(ticket).to validate_length_of(:name).is_at_least(1).is_at_most(255)
         end
 
         it "validates length of description" do
-            expect(ticket).to validate_length_of(:description).is_at_most(1020).on(:create)
+            expect(ticket).to validate_length_of(:description).is_at_most(1020)
         end
+
+        describe "Phone number validation" do
+            let(:valid_phone) { "+1-555-123-4567" } 
+            it "should be considered valid" do
+                expect(valid_phone).to match(/\d{1}-\d{3}-\d{3}-\d{4}/) 
+            end
+            let(:invalid_phone) { "abc-123-4567" }
+            it "should not be considered valid" do
+                expect(invalid_phone).to_not match(/\d{3}-\d{3}-\d{4}/) 
+            end
+        end    
     end
     
-    describe "Phone number validation" do
-        let(:valid_phone) { "+1-555-123-4567" } 
-        it "should be considered valid" do
-            expect(valid_phone).to match(/\d{3}-\d{3}-\d{4}/) 
-        end
-        let(:invalid_phone) { "abc-123-4567" }
-        it "should not be considered valid" do
-            expect(invalid_phone).to_not match(/\d{3}-\d{3}-\d{4}/) 
-        end
-    end
-
+    
     describe "Scope Tests" do
         it "open tickets" do
             region = Region.create!(
@@ -97,8 +129,15 @@ RSpec.describe Ticket, type: :model do
             expect(Ticket.closed).to include(ticket)
             expect(Ticket.open).to_not include(ticket)
         end
-
         
+        it "all organizations" do
+            organization = Organization.create!(
+                name: "organization1"
+                status: :approved
+                phone: "+1-555-555-1212"
+                
+            )
+        end  
     end
 
     describe "method tests" do

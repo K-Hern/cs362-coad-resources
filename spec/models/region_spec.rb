@@ -50,4 +50,3 @@ describe ".unspecified" do
     expect { Region.unspecified }.not_to change { Region.count }
   end
 end
-end

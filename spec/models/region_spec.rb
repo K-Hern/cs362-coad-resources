@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Region, type: :model do
+  #This is a test
 
   let(:region) {Region.new()}
 

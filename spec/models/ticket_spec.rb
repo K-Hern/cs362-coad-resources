@@ -9,7 +9,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     it "belongs to region" do
-        belong_to(:region)
+        should belong_to(:region)
     end
 
     it "belongs to resource category" do

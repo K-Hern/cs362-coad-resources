@@ -87,56 +87,60 @@ RSpec.describe Ticket, type: :model do
             it "should not be considered valid" do
                 expect(invalid_phone).to_not match(/\d{3}-\d{3}-\d{4}/) 
             end
-        end    
+        end
     end
     
     
     describe "Scope Tests" do
-        it "open tickets" do
-            region = Region.create!(
+        let(:region) {
+            Region.create!(
                 name: "region1"
-            )
-            resource = ResourceCategory.create!(
+        )}
+
+        let(:resource) {
+            ResourceCategory.create!(
                 name: "Resource_1"
-            )
-            ticket = Ticket.create!(
+        )}
+
+        let(:ticket) {
+            Ticket.create!(
                 name: "Ticket",
                 phone: "+1-555-555-1212",
                 region_id: region.id,
                 resource_category_id: resource.id,
                 closed: false
-            )
+        )}
+
+        let(:organization) {
+            Organization.create!(
+                name: "organization1",
+                status: :approved,
+                phone: "+1-555-555-1212",
+                email: "test_email@mail.com",
+                primary_name: "primary_name_organization1",
+                secondary_name: "secondary_name_organization1",
+                secondary_phone: "+1-555-555-1231",
+                title: "a title",
+                transportation: :yes
+        )}
+
+        it "open tickets" do
+            ticket.closed = false
 
             expect(Ticket.open).to include(ticket)
             expect(Ticket.closed).to_not include(ticket)
         end
 
         it "closed tickets" do
-            region = Region.create!(
-                name: "region1"
-            )
-            resource = ResourceCategory.create!(
-                name: "Resource_1"
-            )
-            ticket = Ticket.create!(
-                name: "Ticket",
-                phone: "+1-555-555-1212",
-                region_id: region.id,
-                resource_category_id: resource.id,
-                closed: true
-            )
+            ticket.closed = true
 
             expect(Ticket.closed).to include(ticket)
             expect(Ticket.open).to_not include(ticket)
         end
         
         it "all organizations" do
-            organization = Organization.create!(
-                name: "organization1"
-                status: :approved
-                phone: "+1-555-555-1212"
-                
-            )
+            # ticket.closed = false,
+            # expect(Ticket.where.not(organization_id: nil)).to include(ticket)
         end  
     end
 

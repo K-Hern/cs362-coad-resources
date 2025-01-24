@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Region, type: :model do
+  #This is a test
 
   let(:region) {Region.new()}
 
@@ -13,6 +14,7 @@ RSpec.describe Region, type: :model do
       name = 'Mt. Hood'
       region = Region.new(name: name)
       result = region.to_s
+      expect(result).to eq(name)
     end
 
     describe ".unspecified" do
@@ -44,7 +46,7 @@ RSpec.describe Region, type: :model do
     end
   end
 
-  describe "validation testing" do
+  describe "validation testing" do # Validation testing
     describe "Name testing" do
       it  "has a name between 1 & 255 chars" do
         should validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
@@ -54,12 +56,5 @@ RSpec.describe Region, type: :model do
         should validate_uniqueness_of(:name).case_insensitive
       end
     end
-  end
-
-  describe "Scope Tests" do
-    Region.create!() # <- the ! will throw an exc if something fails instead of returning null
-    debug print: pp(object)
-    expect(Region.scope).to include(regionObj)
-    expect(Region.scope).to_not include(regionObj)
   end
 end

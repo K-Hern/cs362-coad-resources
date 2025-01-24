@@ -131,5 +131,3 @@ Recaptcha
 
 
 &copy; 2020 James Martinez, Ryder McDowell. All rights reserved.
-
-sasha wuz here

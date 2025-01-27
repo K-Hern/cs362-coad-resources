@@ -108,11 +108,13 @@ RSpec.describe Ticket, type: :model do
                 phone: "+1-555-555-1212",
                 region_id: region.id,
                 resource_category_id: resource.id,
+                organization_id: 1,
                 closed: false
         )}
 
         let(:organization) {
             Organization.create!(
+                id: 1,
                 name: "organization1",
                 status: :approved,
                 phone: "+1-555-555-1212",
@@ -125,6 +127,8 @@ RSpec.describe Ticket, type: :model do
         )}
         it "open tickets" do
             ticket.closed = false
+            ticket.organization_id = nil
+            ticket.save
 
             expect(Ticket.open).to include(ticket)
             expect(Ticket.closed).to_not include(ticket)
@@ -132,16 +136,47 @@ RSpec.describe Ticket, type: :model do
 
         it "closed tickets" do
             ticket.closed = true
-            pp ticket
+            ticket.save
             
-            # expect(Ticket.open).to_not include(ticket)
-            # expect(Ticket.closed).to include(ticket)
+            expect(Ticket.open).to_not include(ticket)
+            expect(Ticket.closed).to include(ticket)
         end
         
-        # it "all organizations" do
-        #     ticket.closed = false,
-        #     expect(Ticket.where.not(organization_id: nil)).to include(ticket)
-        # end  
+        it "all organizations" do
+            ticket.closed = false
+            ticket.organization_id = 1
+            ticket.save
+
+            expect(Ticket.all_organization).to include(ticket)
+        end  
+
+        it "organization" do
+            ticket.closed = false
+            ticket.organization_id = 1
+            ticket.save
+
+            expect(Ticket.organization(1)).to include(ticket)
+        end
+
+        it "closed_organization" do
+            ticket.closed = true
+            ticket.organization_id = 1
+            ticket.save
+
+            expect(Ticket.closed_organization(1)).to include(ticket)
+        end
+
+        it "region" do
+            ticket.region_id = 1
+
+            expect(Ticket.region(1)).to include(ticket)
+        end
+
+        it "resource_category" do
+            ticket.resource_category_id = 1
+
+            expect(Ticket.resource_category(1)).to include(ticket)
+        end
     end
 
     describe "method tests" do

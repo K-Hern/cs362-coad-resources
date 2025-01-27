@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Organization, type: :model do
 
     describe "organizations:" do
-        let (:org) { Organization.new() }
+        let (:org) { Organization.new(email: "test@email.com") }
         
 
         it "exists" do
@@ -12,7 +12,6 @@ RSpec.describe Organization, type: :model do
 
         describe "validation tests:" do
             describe "validates presence of:" do
-                
                 it "email" do
                     expect(org).to validate_presence_of(:email)
                 end
@@ -68,8 +67,6 @@ RSpec.describe Organization, type: :model do
 
             describe "validates format of:" do
                 it "email" do
-                    org.email = "test@email.com"
-                    pp org
                     expect(org.email).to match(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)
                 end
             end

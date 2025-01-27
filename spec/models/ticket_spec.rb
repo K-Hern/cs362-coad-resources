@@ -38,7 +38,6 @@ RSpec.describe Ticket, type: :model do
         expect(Ticket.new)
     end
 
-    # Not sure if required
     describe "belongs to tests" do
         it "belongs to region" do
             should belong_to(:region)

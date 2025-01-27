@@ -5,7 +5,6 @@ RSpec.describe Organization, type: :model do
     describe "organizations:" do
         let (:org) { Organization.new(email: "test@email.com") }
         
-
         it "exists" do
             Organization.new
         end
@@ -86,7 +85,6 @@ RSpec.describe Organization, type: :model do
             end
         end
 
-        
         describe "attribute tests" do
             it "responds to name" do
                 expect(org).to respond_to(:name)

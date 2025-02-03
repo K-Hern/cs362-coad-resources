@@ -35,21 +35,21 @@ RSpec.describe DashboardHelper, type: :helper do
 
     it "Returns Admin access for admin Users" do
       user.role = :admin
-      expect(dashboard_for(user)).to eq('admin_dashboard')
+      expect(help.dashboard_for(user)).to eq('admin_dashboard')
     end
 
     it "Returns the submitted dashboard for Organizations w/ submissions" do
-      expect(dashboard_for(user)).to eq('organization_submitted_dashboard')
+      expect(helper.dashboard_for(user)).to eq('organization_submitted_dashboard')
     end
 
     it "Returns the approved dashboard for Organizations w/ approved submissions" do
       orgObj.approve
-      expect(dashboard_for(user)).to eq('organization_approved_dashboard')
+      expect(helper.dashboard_for(user)).to eq('organization_approved_dashboard')
     end
 
     it "Returns the creation application for users with no organization" do
       user.organization = nil
-      expect(dashboard_for(user)).to eq('create_application_dashboard')
+      expect(helper.dashboard_for(user)).to eq('create_application_dashboard')
     end
   end
 

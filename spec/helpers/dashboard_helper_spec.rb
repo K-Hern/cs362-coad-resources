@@ -35,7 +35,7 @@ RSpec.describe DashboardHelper, type: :helper do
 
     it "Returns Admin access for admin Users" do
       user.role = :admin
-      expect(help.dashboard_for(user)).to eq('admin_dashboard')
+      expect(helper.dashboard_for(user)).to eq('admin_dashboard')
     end
 
     it "Returns the submitted dashboard for Organizations w/ submissions" do

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ResourceCategory, type: :model do
 
-  let(:resourceCat) {ResourceCategory.new(name: "Shelter", active: true)}
+  let(:resourceCat) {FactoryBot.build_stubbed(:resource_category)}
 
   describe "Class tests" do # Class & Method testing
     it "exists" do
@@ -19,12 +19,13 @@ RSpec.describe ResourceCategory, type: :model do
     end
 
     it "has a way to activate status" do
-      resourceCat = ResourceCategory.new(name: "Tester", active: false)
+      resourceCat = FactoryBot.create(:resource_category, :active => false)
       resourceCat.activate()
       expect(resourceCat.inactive?).to be_falsey()
     end
 
     it "has a way to deactivate status" do
+      resourceCat = FactoryBot.create(:resource_category, :active => true)
       resourceCat.deactivate()
       expect(resourceCat.inactive?).to be_truthy()
     end
@@ -40,7 +41,7 @@ RSpec.describe ResourceCategory, type: :model do
       end
 
       it "does not create a new 'Unspecified' resourceCat if it already exists" do
-        ResourceCategory.create(name: 'Unspecified')
+        FactoryBot.create(:resource_category, name: 'Unspecified')
         expect { ResourceCategory.unspecified }.not_to change { ResourceCategory.count }
       end
     end
@@ -82,8 +83,8 @@ RSpec.describe ResourceCategory, type: :model do
 
   describe "Scope Testing" do # Scope Testing
     # NOTE - Scope interacts with the DB; instances must be saved to the DB, hence the *create!* method
-    let(:activeResourceCat) {ResourceCategory.create!(name: "I'm Active", active: true)}
-    let(:inactiveResourceCat) {ResourceCategory.create!(name: "I'm NOT Active", active: false)}
+    let(:activeResourceCat) {FactoryBot.create(:resource_category, :name => "I'm Active", :active => true)}
+    let(:inactiveResourceCat) {FactoryBot.create(:resource_category, :name => "I'm NOT Active", :active => false)}
 
     it "has a active selection" do
       expect(ResourceCategory.active).to include(activeResourceCat)

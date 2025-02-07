@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Organization, type: :model do
 
     describe "organizations:" do
-        let (:org) { Organization.new(email: "test@email.com") }
+        let (:org) { FactoryBot.build_stubbed(:organization) }
         
         it "exists" do
-            Organization.new
+            FactoryBot.create(:organization)
         end
 
         describe "validation tests:" do
@@ -55,6 +55,7 @@ RSpec.describe Organization, type: :model do
             end
 
             describe "validates uniqueness of:" do
+                let (:org) { FactoryBot.create(:organization) }
                 it "email" do
                     expect(org).to validate_uniqueness_of(:email).case_insensitive
                 end

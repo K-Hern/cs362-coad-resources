@@ -1,7 +1,6 @@
 FactoryBot.define do
 
     factory :region do
-        name { "Region Name" }
+        name { "Mt Hood" }
     end
-    
 end

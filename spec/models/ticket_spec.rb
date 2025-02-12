@@ -61,7 +61,7 @@ RSpec.describe Ticket, type: :model do
     end
     
 
-    describe "belongs to tests" do
+    describe "Belongs to Tests" do
         it "belongs to region" do
             should belong_to(:region)
         end

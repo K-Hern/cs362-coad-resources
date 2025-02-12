@@ -1,18 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+    describe "Class Tests:" do
+        let (:user) { FactoryBot.build_stubbed(:user, :organization_approved) }
 
-    let(:user) { User.new(email: "test@example.com") }
+        it "exists" do
+            User.new
+        end
 
-    before do
-        user.set_default_role
+        it "has a default role of organization" do
+            expect(user.role).to eq("organization")
+        end
+    
+        it "returns the email as a string" do
+            expect(user.to_s).to eq(user.email)
+        end
     end
 
-    it "exists" do
-        User.new
+    describe "Attribute Tests:" do
+        let (:user) { FactoryBot.build_stubbed(:user) }
+
+        it "email" do
+            expect(user).to respond_to(:email)
+        end
+
+        it "role" do
+            expect(user).to respond_to(:role)
+        end
+
+        it "organization_id" do
+            expect(user).to respond_to(:organization_id)
+        end
     end
 
-    describe "validation tests:" do
+    describe "Validation Tests:" do
+        let (:user) { FactoryBot.build_stubbed(:user) }
+
         describe "validates presence of:" do
             it "email" do
                 should validate_presence_of(:email)
@@ -46,31 +69,11 @@ RSpec.describe User, type: :model do
         end
     end
 
-    describe "belongs to test:" do
+    describe "Belongs to Test:" do
+        let (:user) { FactoryBot.build_stubbed(:user) }
+
         it "organization" do
             should belong_to(:organization).optional
         end
-    end
-
-    describe "attribute tests:" do
-        it "email" do
-            expect(user).to respond_to(:email)
-        end
-
-        it "role" do
-            expect(user).to respond_to(:role)
-        end
-
-        it "organization_id" do
-            expect(user).to respond_to(:organization_id)
-        end
-    end
-
-    it "has a default role of organization" do
-        expect(user.role).to eq("organization")
-    end
-
-    it "returns the email as a string" do
-        expect(user.to_s).to eq(user.email)
     end
 end

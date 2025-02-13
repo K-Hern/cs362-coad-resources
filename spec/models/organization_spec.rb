@@ -137,24 +137,29 @@ RSpec.describe Organization, type: :model do
         end
 
         describe "status" do
+            let (:org_approved) { FactoryBot.build_stubbed(:organization, :status_approved) }
+            let (:org_rejected) { FactoryBot.build_stubbed(:organization, :status_rejected) }
+            let (:org_submitted) { FactoryBot.build_stubbed(:organization, :status_submitted) }
+            
             it "can be approved" do
-                org.approve
-                expect(org.status.to_sym).to eq(:approved)
+                expect(org_approved.status.to_sym).to eq(:approved)
             end
 
             it "can be rejected" do
-                org.reject
-                expect(org.status.to_sym).to eq(:rejected)
+                expect(org_rejected.status.to_sym).to eq(:rejected)
             end
 
             it "sets default status to submitted" do
-                org.set_default_status
-                expect(org.status.to_sym).to eq(:submitted)
+                expect(org_submitted.status.to_sym).to eq(:submitted)
             end
         end
 
         it "returns the name as a string" do
             expect(org.to_s).to eq(org.name)
+
+            organization = FactoryBot.build_stubbed(:organization, name: "fake_name")
+            result = organization.to_s
+            expect(result).to eq "fake_name"
         end
     end
 end

@@ -5,6 +5,13 @@ FactoryBot.define do
         region
         resource_category
         organization_id  # defined as a sequence
-        closed { false }
+
+        trait :ticket_open do
+            closed { false }
+        end
+
+        trait :ticket_closed do
+            closed { true }
+        end
     end
 end

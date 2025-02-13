@@ -26,11 +26,12 @@ RSpec.describe TicketsController, type: :controller do
                 }
             end
 
+            # THIS IS JUST A FATAL UNHANDLED ERROR... http://localhost:3000/tickets/1 -> NoMethodError in TicketsController#show
             # describe "GET - /tickets/:id(.:format) - tickets#show" do  # mocked ticket required, should not be able to get here without being logged in so that might be while this mock does not work...?
             #     let(:ticket) { FactoryBot.create(:ticket) }
             #     it "redirects to ticket of specific id" do
             #         get(:show, params: { id: ticket.id })
-            #         expect(response).to redirect_to dashboard_path
+            #         expect(response).to redirect_to 
             #     end
             # end
         end
@@ -52,15 +53,16 @@ RSpec.describe TicketsController, type: :controller do
                 }
             end
 
-            # DOES NOT WORK CORRECTLY
-            # describe "GET - /tickets/:id(.:format) - tickets#show" do  # mocked ticket required, should not be able to get here without being logged in so that might be while this mock does not work...?
-            #     let(:ticket) { FactoryBot.create(:ticket) }
-            #     let(:organization) { FactoryBot.build_stubbed(organization_id: ticket.id)}
-            #     it "redirects to ticket of specific id" do
-            #         get(:show, params: { id: ticket.id })
-            #         expect(response).to redirect_to dashboard_path
-            #     end
-            # end
+            # MIGHT WORK CORRECTLY
+            describe "GET - /tickets/:id(.:format) - tickets#show" do
+                let(:user) { FactoryBot.create(:user, :organization_approved)}
+                let(:ticket) { FactoryBot.create(:ticket, organization_id: user.organization_id) }
+                
+                it "redirects to ticket of specific id" do
+                    get(:show, params: { id: ticket.id })
+                    expect(response).to be_successful
+                end
+            end
         end
         
         describe "Logged in as Admin:" do

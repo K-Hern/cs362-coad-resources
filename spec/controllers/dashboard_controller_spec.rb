@@ -3,7 +3,7 @@ require 'rails_helper'
 # GET    /dashboard(.:format)         dashboard#index
 
 RSpec.describe DashboardController, type: :controller do
-    describe "Ticket Controller" do
+    describe "Dashboard Controller" do
         describe "Logged Out:" do
             let(:user) { FactoryBot.create(:user) }
 

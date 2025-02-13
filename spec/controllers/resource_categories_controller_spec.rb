@@ -12,7 +12,7 @@ require 'rails_helper'
 # DELETE /resource_categories/:id(.:format)                   resource_categories#destroy
 
 RSpec.describe ResourceCategoriesController, type: :controller do
-    describe "Ticket Controller" do
+    describe "Resource Categories Controller" do
         describe "Logged Out:" do
             let(:user) { FactoryBot.create(:user) }
 

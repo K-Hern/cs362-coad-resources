@@ -36,18 +36,19 @@ RSpec.describe Ticket, type: :model do
 
     describe "Class Tests:" do
         let (:ticket) { FactoryBot.build_stubbed(:ticket) }
+        let (:ticket_open) { FactoryBot.build_stubbed(:ticket, :ticket_open) }
+        let (:ticket_closed) { FactoryBot.build_stubbed(:ticket, :ticket_closed) }
 
         it "exists" do
             Ticket.new
         end
 
         it "returns true if the ticket is open" do
-            expect(ticket.open?).to eq(true)
+            expect(ticket_open.open?).to eq(true)
         end
 
         it "returns false if the ticket is closed" do
-            ticket.closed = true
-            expect(ticket.open?).to eq(false)
+            expect(ticket_closed.open?).to eq(false)
         end
 
         it "returns true if the ticket is captured" do
@@ -103,42 +104,37 @@ RSpec.describe Ticket, type: :model do
         end
 
         describe "Phone number validation" do
-            let(:valid_phone) { "+1-555-123-4567" } 
-            it "should be considered valid" do
-                expect(valid_phone).to match(/\d{1}-\d{3}-\d{3}-\d{4}/) 
-            end
-            let(:invalid_phone) { "abc-123-4567" }
-            it "should not be considered valid" do
-                expect(invalid_phone).to_not match(/\d{3}-\d{3}-\d{4}/) 
+            it "should be valid" do
+                expect(ticket.phone).to match(/\d{1}-\d{3}-\d{3}-\d{4}/)
             end
         end
     end
     
     
     describe "Scope Tests" do
-        let (:ticket_open) { FactoryBot.create(:ticket, closed: false, organization_id: nil) }
+        let (:ticket_open) { FactoryBot.create(:ticket, :ticket_open, organization_id: nil) }
         it "open tickets" do
             expect(Ticket.open).to include(ticket_open)
             expect(Ticket.closed).to_not include(ticket_open)
         end
 
-        let (:ticket_closed) { FactoryBot.create(:ticket, closed: true, organization_id: nil) }
+        let (:ticket_closed) { FactoryBot.create(:ticket, :ticket_closed, organization_id: nil) }
         it "closed tickets" do
             expect(Ticket.open).to_not include(ticket_closed)
             expect(Ticket.closed).to include(ticket_closed)
         end
         
-        let (:ticket_all_organizations) { FactoryBot.create(:ticket, closed: false, organization_id: 1) }
+        let (:ticket_all_organizations) { FactoryBot.create(:ticket, :ticket_open, organization_id: 1) }
         it "all organizations" do
             expect(Ticket.all_organization).to include(ticket_all_organizations)
         end  
 
-        let (:ticket_organization) { FactoryBot.create(:ticket, closed: false, organization_id: 1) }
+        let (:ticket_organization) { FactoryBot.create(:ticket, :ticket_open, organization_id: 1) }
         it "organization" do
             expect(Ticket.organization(1)).to include(ticket_organization)
         end
 
-        let (:ticket_closed_organization) { FactoryBot.create(:ticket, closed: true, organization_id: 1) }
+        let (:ticket_closed_organization) { FactoryBot.create(:ticket, :ticket_closed, organization_id: 1) }
         it "closed_organization" do
             expect(Ticket.closed_organization(1)).to include(ticket_closed_organization)
         end

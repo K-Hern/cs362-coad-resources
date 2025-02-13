@@ -1,6 +1,6 @@
 FactoryBot.define do
     factory :user do
-        email { "test_email@example.com" }
+        email  # defined as a sequence
         password { "fake_password" }
 
         before(:create) { |user| user.skip_confirmation! }

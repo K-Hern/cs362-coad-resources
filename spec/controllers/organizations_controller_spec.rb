@@ -111,7 +111,7 @@ RSpec.describe OrganizationsController, type: :controller do
       describe "GET - /organizations(.:format) - organizations#index" do
         it "Serves dashboard" do
           get(:index)
-          expect(response).to be_succesful
+          expect(response).to be_successful
         end
       end
       

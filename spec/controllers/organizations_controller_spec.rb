@@ -104,9 +104,16 @@ RSpec.describe OrganizationsController, type: :controller do
     end
 
     describe "Logged in as User (Non-Admin):" do
+      let(:org) { FactoryBot.build_stubbed(:organization)}
       let(:user) { FactoryBot.create(:user) }
       before(:each) { sign_in user }
 
+      describe "GET - /organizations(.:format) - organizations#index" do
+        it "Serves dashboard" do
+          get(:index)
+          expect(response).to be_succesful
+        end
+      end
       
     end
   end

@@ -43,28 +43,28 @@ RSpec.describe RegionsController, type: :controller do
       end
 
       describe "GET - /regions/:id(.:format) - regions#show" do
-        it "Redirects user from new to sign in" do
+        it "Redirects user from show to sign in" do
           get(:show, params: { id: test_region.id })
           expect(response).to redirect_to new_user_session_path
         end
       end
 
       describe "PATCH - /regions/:id(.:format) - regions#update" do
-        it "Redirects user from new to sign in" do
+        it "Redirects user from update to sign in - PATCH" do
           patch(:update, params: { id: test_region.id })
           expect(response).to redirect_to new_user_session_path
         end
       end
 
       describe "PUT - /regions/:id(.:format) - regions#update" do
-        it "Redirects user from new to sign in" do
+        it "Redirects user from update to sign in - PUT" do
           put(:update, params: { id: test_region.id })
           expect(response).to redirect_to new_user_session_path
         end
       end
 
       describe "DELETE - /regions/:id(.:format) - regions#destroy" do
-        it "Redirects user from new to sign in" do
+        it "Redirects user from destroy to sign in" do
           delete(:destroy, params: { id: test_region.id })
           expect(response).to redirect_to new_user_session_path
         end
@@ -72,6 +72,7 @@ RSpec.describe RegionsController, type: :controller do
     end
 
     describe "Logged in as User (Non Admin):" do
+      let(:test_region) {FactoryBot.create(:region, name: "Test Region")}
       let(:user) { FactoryBot.create(:user) }
       before(:each) { sign_in user }
 
@@ -82,37 +83,53 @@ RSpec.describe RegionsController, type: :controller do
       end
 
       describe "POST - /regions(.:format) - regions#create" do
-        it "Something" do
+        it "Redirects from create to dashboard" do
           post(:create, params: { region: FactoryBot.attributes_for(:region) })
           expect(response).to redirect_to dashboard_path
         end
       end
 
       describe "GET - /regions/new(.:format) - regions#new" do
-        it { expect(get(:new)).to redirect_to dashboard_path }
+        it "Redirects from create to dashboard" do
+          expect(get(:new)).to redirect_to dashboard_path
+        end
       end
 
-      describe "GET - /regions/:id/edit(.:format) - regions#edit" do
 
+      describe "GET - /regions/:id/edit(.:format) - regions#edit" do
+        it "Redirects user from edit to dashboard" do
+          get(:edit, params: { id: test_region.id })
+          expect(response).to redirect_to dashboard_path
+        end
       end
 
       describe "GET - /regions/:id(.:format) - regions#show" do
-
+        it "Redirects user from show to dashboard" do
+          get(:show, params: { id: test_region.id })
+          expect(response).to redirect_to dashboard_path
+        end
       end
 
       describe "PATCH - /regions/:id(.:format) - regions#update" do
-
+        it "Redirects user from update to dashboard - PATCH" do
+          patch(:update, params: { id: test_region.id })
+          expect(response).to redirect_to dashboard_path
+        end
       end
 
       describe "PUT - /regions/:id(.:format) - regions#update" do
-
+        it "Redirects user from update to dashboard - PUT" do
+          put(:update, params: { id: test_region.id })
+          expect(response).to redirect_to dashboard_path
+        end
       end
 
       describe "DELETE - /regions/:id(.:format) - regions#destroy" do
-
+        it "Redirects user from destroy to dashboard" do
+          delete(:destroy, params: { id: test_region.id })
+          expect(response).to redirect_to dashboard_path
+        end
       end
-
-
     end
 
     describe "Logged in as Admin:" do

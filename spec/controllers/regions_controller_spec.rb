@@ -16,15 +16,18 @@ RSpec.describe RegionsController, type: :controller do
       let(:user) { FactoryBot.create(:user) }
 
       describe "#GET - /regions(.:format) - regions#index" do
-        # Test Some Stuff
+        it { expect(get(:index)).to redirect_to new_user_session_path }
       end
 
       describe "POST - /regions(.:format) - regions#create" do
-        # Test Some Stuff
+      it {
+        post(:create, params: { region: FactoryBot.attributes_for(:region) })
+        expect(response).to redirect_to new_user_session_path
+      }
       end
 
       describe "GET - /regions/new(.:format) - regions#new" do
-
+        it { expect(get(:new)).to redirect_to new_user_session_path }
       end
 
       describe "GET - /regions/:id/edit(.:format) - regions#edit" do
@@ -55,15 +58,18 @@ RSpec.describe RegionsController, type: :controller do
       before(:each) { sign_in user }
 
       describe "#GET - /regions(.:format) - regions#index" do
-        # Test Some Stuff
+        it { expect(get(:index)).to redirect_to dashboard_path }
       end
 
       describe "POST - /regions(.:format) - regions#create" do
-        # Test Some Stuff
+        it {
+          post(:create, params: { region: FactoryBot.attributes_for(:region) })
+          expect(response).to redirect_to dashboard_path
+        }
       end
 
       describe "GET - /regions/new(.:format) - regions#new" do
-
+        it { expect(get(:new)).to redirect_to dashboard_path }
       end
 
       describe "GET - /regions/:id/edit(.:format) - regions#edit" do
@@ -128,4 +134,29 @@ RSpec.describe RegionsController, type: :controller do
 
     end
   end
+end
+
+
+describe 'as a logged in user' do
+  let(:user) { FactoryBot.create(:user) }
+  before(:each) { sign_in user }
+
+  it { expect(get(:index)).to redirect_to dashboard_path }
+  it {
+    post(:create, params: { region: FactoryBot.attributes_for(:region) })
+    expect(response).to redirect_to dashboard_path
+  }
+  it { expect(get(:new)).to redirect_to dashboard_path }
+end
+
+describe 'as an admin' do
+  let(:user) { FactoryBot.create(:user, :admin) }
+  before(:each) { sign_in user }
+
+  it { expect(get(:index)).to be_successful }
+  it {
+    post(:create, params: { region: FactoryBot.attributes_for(:region) })
+    expect(response).to redirect_to regions_path
+  }
+  it { expect(get(:new)).to be_successful }
 end

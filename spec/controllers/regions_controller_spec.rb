@@ -13,6 +13,7 @@ RSpec.describe RegionsController, type: :controller do
   describe "Region Controller" do
 
     describe "Logged Out:" do
+      let(:test_region) {FactoryBot.create(:region, name: "Test Region")}
       let(:user) { FactoryBot.create(:user) }
 
       describe "#GET - /regions(.:format) - regions#index" do
@@ -35,26 +36,39 @@ RSpec.describe RegionsController, type: :controller do
       end
 
       describe "GET - /regions/:id/edit(.:format) - regions#edit" do
-
+        it "Redirects user from edit to sign in" do
+          get(:edit, params: { id: test_region.id })
+          expect(response).to redirect_to new_user_session_path
+        end
       end
 
       describe "GET - /regions/:id(.:format) - regions#show" do
-
+        it "Redirects user from new to sign in" do
+          get(:show, params: { id: test_region.id })
+          expect(response).to redirect_to new_user_session_path
+        end
       end
 
       describe "PATCH - /regions/:id(.:format) - regions#update" do
-
+        it "Redirects user from new to sign in" do
+          patch(:update, params: { id: test_region.id })
+          expect(response).to redirect_to new_user_session_path
+        end
       end
 
       describe "PUT - /regions/:id(.:format) - regions#update" do
-
+        it "Redirects user from new to sign in" do
+          put(:update, params: { id: test_region.id })
+          expect(response).to redirect_to new_user_session_path
+        end
       end
 
       describe "DELETE - /regions/:id(.:format) - regions#destroy" do
-
+        it "Redirects user from new to sign in" do
+          delete(:destroy, params: { id: test_region.id })
+          expect(response).to redirect_to new_user_session_path
+        end
       end
-
-
     end
 
     describe "Logged in as User (Non Admin):" do

@@ -171,7 +171,10 @@ RSpec.describe ResourceCategoriesController, type: :controller do
 
       describe "PATCH - /resource_categories/:id/activate(.:format) - resource_categories#activate" do
         it "Redirects to the resource_cat's path page and shows a notice" do
+
           allow(resource_cat).to receive(:activate).and_return(true)
+          # Overrides the  before_action :set_resource_category
+          allow(ResourceCategory).to receive(:find).and_return(resource_cat)
 
           patch(:activate, params: {id: resource_cat.id})
           # Bad form, but resource_categories_path(resource_cat) returning . instead of /
@@ -180,37 +183,42 @@ RSpec.describe ResourceCategoriesController, type: :controller do
         end
 
         it "Redirects to the resource_cat's path page and shows an alert upon failure" do
+
           allow(resource_cat).to receive(:activate).and_return(false)
+          # Overrides the  before_action :set_resource_category
+          allow(ResourceCategory).to receive(:find).and_return(resource_cat)
 
           patch(:activate, params: {id: resource_cat.id})
+          # Bad form, but resource_categories_path(resource_cat) returning . instead of /
           expect(response).to redirect_to "#{resource_categories_path}/#{resource_cat.id}"
-
-          # Not Sure why this isn't working
-          # expect(flash[:alert]).to eq('There was a problem activating the category.')
+          expect(flash[:alert]).to eq('There was a problem activating the category.')
         end
-
       end
 
       describe "PATCH - /resource_categories/:id/deactivate(.:format) - resource_categories#deactivate" do
         it "Redirects to the resource_cat's path page and shows a notice" do
-          allow(resource_cat).to receive(:deactivate).and_return(true)
 
-          patch(:activate, params: {id: resource_cat.id})
+          allow(resource_cat).to receive(:deactivate).and_return(true)
+          # Overrides the  before_action :set_resource_category
+          allow(ResourceCategory).to receive(:find).and_return(resource_cat)
+
+          patch(:deactivate, params: {id: resource_cat.id})
           # Bad form, but resource_categories_path(resource_cat) returning . instead of /
           expect(response).to redirect_to "#{resource_categories_path}/#{resource_cat.id}"
-          expect(flash[:notice]).to eq('Category activated.')
+          expect(flash[:notice]).to eq('Category deactivated.')
         end
 
         it "Redirects to the resource_cat's path page and shows an alert upon failure" do
+
           allow(resource_cat).to receive(:deactivate).and_return(false)
+          # Overrides the  before_action :set_resource_category
+          allow(ResourceCategory).to receive(:find).and_return(resource_cat)
 
-          patch(:activate, params: {id: resource_cat.id})
+          patch(:deactivate, params: {id: resource_cat.id})
+          # Bad form, but resource_categories_path(resource_cat) returning . instead of /
           expect(response).to redirect_to "#{resource_categories_path}/#{resource_cat.id}"
-
-          # Not Sure why this isn't working
-          # expect(flash[:alert]).to eq('There was a problem activating the category.')
+          expect(flash[:alert]).to eq('There was a problem deactivating the category.')
         end
-
       end
 
       describe "GET - /resource_categories(.:format) - resource_categories#index" do
@@ -307,7 +315,6 @@ RSpec.describe ResourceCategoriesController, type: :controller do
           expect(flash[:notice]).to eq("Category #{resource_cat.name} was deleted.\nAssociated tickets now belong to the 'Unspecified' category.")
         end
       end
-
     end
   end
 end

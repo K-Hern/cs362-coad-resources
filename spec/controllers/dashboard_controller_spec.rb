@@ -9,18 +9,20 @@ RSpec.describe DashboardController, type: :controller do
 
             describe "GET - /dashboard(.:format) - dashboard#index" do
                 it {
-                    expect(get(:index)).to redirect_to new_user_session_path
+                    get(:index) 
+                    expect(response).to redirect_to new_user_session_path
                 }
             end
         end
 
         describe "Logged in as User:" do
-            let(:user) { FactoryBot.create(:user) }
+            let(:user) { FactoryBot.create(:user, :organization_approved) }
             before(:each) { sign_in user }
 
             describe "GET - /dashboard(.:format) - dashboard#index" do
                 it {
-                    expect(get(:index)).to be_successful
+                    get(:index)
+                    expect(response).to be_successful
                 }
             end
         end
@@ -31,7 +33,8 @@ RSpec.describe DashboardController, type: :controller do
 
             describe "GET - /dashboard(.:format) - dashboard#index" do
                 it {
-                    expect(get(:index)).to be_successful
+                    get(:index)
+                    expect(response).to be_successful
                 }
             end
         end

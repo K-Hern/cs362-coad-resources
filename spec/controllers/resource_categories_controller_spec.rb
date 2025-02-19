@@ -14,7 +14,7 @@ require 'rails_helper'
 RSpec.describe ResourceCategoriesController, type: :controller do
   describe "Resource Categories Controller" do
     describe "Logged Out:" do
-      let(:resource_cat) { FactoryBot.create(:resource_category)}
+      let(:resource_cat) { FactoryBot.build_stubbed(:resource_category)}
       let(:user) { FactoryBot.create(:user)}
 
       describe "PATCH - /resource_categories/:id/activate(.:format) - resource_categories#activate" do
@@ -89,7 +89,7 @@ RSpec.describe ResourceCategoriesController, type: :controller do
     end
 
     describe "Logged in as User (Non-Admin):" do
-      let(:resource_cat) { FactoryBot.create(:resource_category)}
+      let(:resource_cat) { FactoryBot.build_stubbed(:resource_category)}
       let(:user) { FactoryBot.create(:user) }
       before(:each) { sign_in user }
 

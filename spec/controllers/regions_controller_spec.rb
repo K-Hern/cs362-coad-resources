@@ -13,7 +13,7 @@ RSpec.describe RegionsController, type: :controller do
   describe "Region Controller" do
 
     describe "Logged Out:" do
-      let(:test_region) {FactoryBot.create(:region, name: "Test Region")}
+      let(:test_region) {FactoryBot.build_stubbed(:region, name: "Test Region")}
       let(:user) { FactoryBot.create(:user) }
 
       describe "#GET - /regions(.:format) - regions#index" do
@@ -72,7 +72,7 @@ RSpec.describe RegionsController, type: :controller do
     end
 
     describe "Logged in as User (Non Admin):" do
-      let(:test_region) {FactoryBot.create(:region, name: "Test Region")}
+      let(:test_region) {FactoryBot.build_stubbed(:region, name: "Test Region")}
       let(:user) { FactoryBot.create(:user) }
       before(:each) { sign_in user }
 

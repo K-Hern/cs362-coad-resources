@@ -32,14 +32,6 @@ RSpec.describe OrganizationsController, type: :controller do
         end
       end
 
-      # Resources is not a method in the organizations controller - why is this in the routes?
-      #describe "GET - /organizations/:id/resources(.:format) - organizations#resources" do
-      #  it "Redirects to sign in" do
-      #    get(:resources, params: {id: org.id})
-      #    expect(response).to redirect_to new_user_session_path
-      #  end
-      #end
-
       describe "GET - /organizations(.:format) - organizations#index" do
         it "Redirects to sign in" do
           get(:index)
@@ -89,16 +81,6 @@ RSpec.describe OrganizationsController, type: :controller do
         end
       end
 
-
-      #destroy is not a method in the organizations controller - why is this in the routes?
-
-      #describe "DELETE - /organizations/:id(.:format) - organizations#destroy" do
-      #  it "Redirects to sign in" do
-      #    delete(:destroy, params: {id: org.id})
-      #    expect(response).to redirect_to new_user_session_path
-      #  end
-      #end
-
     end
 
     describe "Logged in as User (Non-Admin):" do
@@ -112,12 +94,6 @@ RSpec.describe OrganizationsController, type: :controller do
       end
 
       describe "POST - /organizations/:id/reject(.:format) - organizations#reject" do
-        it "" do
-        end
-      end
-
-      # Resources is not a method in the organizations controller - why is this in the routes?
-      describe "GET - /organizations/:id/resources(.:format) - organizations#resources" do
         it "" do
         end
       end
@@ -159,11 +135,6 @@ RSpec.describe OrganizationsController, type: :controller do
         end
       end
 
-      # Destroy is not a method in the organizations controller - why is this in the routes?
-      describe "DELETE - /organizations/:id(.:format) - organizations#destroy" do
-        it "" do
-        end
-      end
     end
 
     describe "Logged in as Admin:" do
@@ -177,12 +148,6 @@ RSpec.describe OrganizationsController, type: :controller do
       end
 
       describe "POST - /organizations/:id/reject(.:format) - organizations#reject" do
-        it "" do
-        end
-      end
-
-      # Resources is not a method in the organizations controller - why is this in the routes?
-      describe "GET - /organizations/:id/resources(.:format) - organizations#resources" do
         it "" do
         end
       end
@@ -219,12 +184,6 @@ RSpec.describe OrganizationsController, type: :controller do
       end
 
       describe "PUT - /organizations/:id(.:format) - organizations#update" do
-        it "" do
-        end
-      end
-
-      # Destroy is not a method in the organizations controller - why is this in the routes?
-      describe "DELETE - /organizations/:id(.:format) - organizations#destroy" do
         it "" do
         end
       end

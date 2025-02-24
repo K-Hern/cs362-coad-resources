@@ -42,7 +42,7 @@ class TicketsController < ApplicationController
 
     if TicketService.release_ticket(params[:id], current_user) == :ok
       if current_user.admin?
-        redirect_to dashboard_path << '#tickets:captured'
+        # redirect_to dashboard_path << '#tickets:captured'
       else
         redirect_to dashboard_path << '#tickets:organization'
       end

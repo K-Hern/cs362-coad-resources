@@ -4,7 +4,7 @@ RSpec.describe Organization, type: :model do
 
     describe "organizations:" do
         let (:org) { FactoryBot.build_stubbed(:organization) }
-        
+
         it "exists" do
             FactoryBot.create(:organization)
         end
@@ -44,7 +44,7 @@ RSpec.describe Organization, type: :model do
                 it "email" do
                     expect(org).to validate_length_of(:email).is_at_least(1).is_at_most(255).on(:create)
                 end
-                
+
                 it "name" do
                     expect(org).to validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
                 end
@@ -98,7 +98,7 @@ RSpec.describe Organization, type: :model do
             it "responds to phone" do
                 expect(org).to respond_to(:phone)
             end
-            
+
             it "responds to email" do
                 expect(org).to respond_to(:email)
             end
@@ -137,19 +137,22 @@ RSpec.describe Organization, type: :model do
         end
 
         describe "status" do
-            let (:org_approved) { FactoryBot.build_stubbed(:organization, :status_approved) }
-            let (:org_rejected) { FactoryBot.build_stubbed(:organization, :status_rejected) }
+            let (:org_approved) { FactoryBot.build_stubbed(:organization, :status_rejected) }
+            let (:org_rejected) { FactoryBot.build_stubbed(:organization, :status_approved) }
             let (:org_submitted) { FactoryBot.build_stubbed(:organization, :status_submitted) }
-            
+
             it "can be approved" do
+                org_approved.approve
                 expect(org_approved.status.to_sym).to eq(:approved)
             end
 
             it "can be rejected" do
-                expect(org_rejected.status.to_sym).to eq(:rejected)
+                org_rejected.reject
+                expect(org_approved.status.to_sym).to eq(:rejected)
             end
 
             it "sets default status to submitted" do
+                org_submitted.set_default_status
                 expect(org_submitted.status.to_sym).to eq(:submitted)
             end
         end

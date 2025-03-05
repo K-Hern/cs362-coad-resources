@@ -111,7 +111,9 @@ RSpec.describe OrganizationsController, type: :controller do
       end
 
       describe "GET - /organizations/new(.:format) - organizations#new" do
-        it "" do
+        it "redirects to dashboard" do
+          get(:new, params: { id: org.id })
+          expect(response).to be_successful
         end
       end
 

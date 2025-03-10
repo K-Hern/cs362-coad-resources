@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Deleting a Region', type: :feature do
   let(:region_path) {'/regions'}
-  let(:tickets_path) {'/tickets'}
 
   before(:each) {
     @user = FactoryBot.create(:user, :admin)
@@ -16,7 +15,7 @@ RSpec.describe 'Deleting a Region', type: :feature do
       visit region_path
       expect(current_path).to eq region_path
 
-      click_on "Deletion Region"
+      click_on region.name
       click_on "Delete"
 
       expect(current_path).to eq region_path

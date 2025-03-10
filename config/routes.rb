@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   end
   devise_for :users, controllers: { registrations: 'users/registrations' }
 
+  get '/users/' => 'users#index'
+
   authenticate :user do
 
     resources :tickets, only: :destroy

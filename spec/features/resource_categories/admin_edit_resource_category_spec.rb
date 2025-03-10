@@ -10,17 +10,18 @@ RSpec.describe 'Edit a Resource Category', type: :feature do
 
   describe "Category Edit" do
     it "Allows the updating of an existing Resource Category" do
-      FactoryBot.create(:resource_category, name: "Test Category")
+      cat = FactoryBot.create(:resource_category, name: "Test Category")
+      new_name = "New Category Name"
       visit categories_path
 
-      click_on "Test Category"
+      click_on cat.name
       click_on "Edit Resource Category"
 
-      fill_in "Name", with: "New Category Name"
+      fill_in "Name", with: new_name
       click_on "Save changes"
 
       expect(page).to have_text("Category successfully updated")
-      expect(page).to have_text("New Category Name")
+      expect(page).to have_text(new_name)
     end
   end
 end

@@ -10,20 +10,20 @@ RSpec.describe 'Edit a Resource Category Status', type: :feature do
 
   describe "Category Status Edit" do
     it "Allows the activation of an existing Resource Category" do
-      FactoryBot.create(:resource_category, name: "Test Category", active: false)
+      cat = FactoryBot.create(:resource_category, name: "Test Category", active: false)
       visit categories_path
 
-      click_on "Test Category"
+      click_on cat.name
       click_on "Activate"
 
       expect(page).to have_text("Category activated.")
     end
 
     it "Allows the activation of an existing Resource Category" do
-      FactoryBot.create(:resource_category, name: "Test Category", active: true)
+      cat = FactoryBot.create(:resource_category, name: "Test Category", active: true)
       visit categories_path
 
-      click_on "Test Category"
+      click_on cat.name
       click_on "Deactivate"
 
       expect(page).to have_text("Category deactivated.")

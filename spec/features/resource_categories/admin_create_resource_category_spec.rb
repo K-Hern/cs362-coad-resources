@@ -10,14 +10,15 @@ RSpec.describe 'Creating a Resource Category', type: :feature do
 
   describe "Category Creation" do
     it "Allows the creation of a new Resource Category" do
+      cat_name = "New Test Category"
       visit categories_path
 
       click_on "Add Resource Category"
-      fill_in "Name", with: "New Test Category"
+      fill_in "Name", with: cat_name
       click_on "Add resource category"
 
       expect(page).to have_text("Category successfully created.")
-      expect(page).to have_text("New Test Category")
+      expect(page).to have_text(cat_name)
     end
   end
 end

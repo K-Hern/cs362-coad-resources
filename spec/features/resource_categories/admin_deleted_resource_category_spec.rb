@@ -10,13 +10,13 @@ RSpec.describe 'Deleting a Resource Category', type: :feature do
 
   describe "Category Deletion" do
     it "Allows the deletion of an existing Resource Category" do
-      FactoryBot.create(:resource_category, name: "Test Category")
+      cat = FactoryBot.create(:resource_category, name: "Test Category")
       visit categories_path
 
-      click_on "Test Category"
+      click_on cat.name
       click_on "Delete"
 
-      expect(page).to have_text("Category Test Category was deleted.")
+      expect(page).to have_text("Category #{cat.name} was deleted.")
     end
   end
 end

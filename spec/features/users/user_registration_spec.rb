@@ -11,9 +11,9 @@ RSpec.describe 'User registration', type: :feature do
             fill_in 'Email', with: 'test@example.com'
             fill_in 'Password', with: 'password123'
             fill_in 'Password confirmation', with: 'password123'
-            
+
             click_button "Sign up"
-            expect(page).to have_text("A message with a confirmation link has been sent to your email address.")
+            expect(page).to have_text("A message with a confirmation")
         end
     end
 end

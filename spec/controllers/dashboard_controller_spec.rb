@@ -9,7 +9,7 @@ RSpec.describe DashboardController, type: :controller do
 
             describe "GET - /dashboard(.:format) - dashboard#index" do
                 it {
-                    get(:index) 
+                    get(:index)
                     expect(response).to redirect_to new_user_session_path
                 }
             end
@@ -113,7 +113,7 @@ RSpec.describe DashboardController, type: :controller do
             let(:non_approved_org) { FactoryBot.create(:organization, :status_rejected) }
             let(:user) { FactoryBot.create(:user, organization: non_approved_org) }
             before(:each) { sign_in user }
-            
+
             describe "GET #index assigns status_options" do
                 it "returns default ['Open']" do
                     get(:index)

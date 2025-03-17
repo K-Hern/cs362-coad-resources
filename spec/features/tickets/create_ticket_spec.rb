@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Creating a Ticket', type: :feature do
     before do
-        @region = create(:region)
-        @resource_category = create(:resource_category)
+        @region = FactoryBot.create(:region)
+        @resource_category = FactoryBot.create(:resource_category)
     end
 
     it "can be created from the home screen" do

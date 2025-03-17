@@ -88,16 +88,6 @@ RSpec.describe OrganizationsController, type: :controller do
       let(:user) { FactoryBot.create(:user) }
       before(:each) { sign_in user }
 
-      # describe "POST - /organizations/:id/approve(.:format) - organizations#approve" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "POST - /organizations/:id/reject(.:format) - organizations#reject" do
-      #   it "" do
-      #   end
-      # end
-
       describe "GET - /organizations(.:format) - organizations#index" do
         it "Serves dashboard" do
           get(:index)
@@ -166,64 +156,12 @@ RSpec.describe OrganizationsController, type: :controller do
           end
         end
       end
-
-      # describe "GET - /organizations/:id/edit(.:format) - organizations#edit" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "GET - /organizations/:id(.:format) - organizations#show" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "PATCH - /organizations/:id(.:format) - organizations#update" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "PUT - /organizations/:id(.:format) - organizations#update" do
-      #   it "" do
-      #   end
-      # end
-
     end
 
     describe "Logged in as Admin:" do
       let(:org) { FactoryBot.create(:organization, :status_approved) }
       let(:user) { FactoryBot.create(:user, :admin) }
       before(:each) { sign_in user }
-
-      # describe "POST - /organizations/:id/approve(.:format) - organizations#approve" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "POST - /organizations/:id/reject(.:format) - organizations#reject" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "GET - /organizations(.:format) - organizations#index" do
-      #   it "" do
-
-      #   end
-      # end
-
-      # describe "POST - /organizations(.:format) - organizations#create" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "GET - /organizations/new(.:format) - organizations#new" do
-      #   it "" do
-      #   end
-      # end
-
-      # describe "GET - /organizations/:id/edit(.:format) - organizations#edit" do
-      #   it "" do
-      #   end
-      # end
 
       describe "GET - /organizations/:id(.:format) - organizations#show" do
         it "renders the show template" do

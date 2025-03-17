@@ -4,7 +4,7 @@ FactoryBot.define do
         phone   # defined as a sequence
         region
         resource_category
-        organization_id  # defined as a sequence
+        # organization_id  # defined as a sequence
 
         trait :ticket_open do
             closed { false }
@@ -12,6 +12,15 @@ FactoryBot.define do
 
         trait :ticket_closed do
             closed { true }
+        end
+
+        trait :captured do
+            closed { false }
+            transient do
+                org_id { create(:organization).id }
+            end
+      
+            organization_id { org_id }
         end
     end
 end
